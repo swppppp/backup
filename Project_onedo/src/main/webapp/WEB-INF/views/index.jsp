@@ -111,7 +111,49 @@
 function beforeSubmit() {
   var memberEmail = $('#email').val() +'@'+ $('#emailHost').val();
   $('#memberEmail').val(memberEmail);
-}
+};
+
+// 아이디 중복확인을 위한 비동기
+$(function() {
+	// id체크여부
+	var idck = 0;
+	
+	// idDup버튼 클릭 시, 비동기로 아이디 중복확인
+	$('#dupCheck').on('click', function() {
+		var userid = $('#userid').val();
+		var userInfo = {
+				"userid":userid
+		}
+		
+		$.ajax({
+			type : 'POST',
+			data : JSON.stringify(userInfo),
+			url : "member/idDupCheck",
+			dataType : "json",
+			contentType : "application/json; charset=utf-8",
+			success : function(data) {
+				//비동기 성공 시
+				if(data.cnt > 0){
+					console.log("-----비동기결과 cnt값: "+cnt);
+					alert("중복!");
+					$('#userid').val("");
+					$('#userid').focus();
+				}else{
+					console.log("-----비동기결과 cnt값: "+cnt);
+					alert("사용가능!");
+					$('#userid').val(userid);
+					$('#userid').attr('readonly', 'readonly');
+					$('#dupCheck').attr('disabled', 'disabled');
+					$('#userpw').focus();
+					idck = 1;
+				}
+			},
+			error : function(error) {
+				alert("비동기 오류!");
+			}
+		});
+	});
+});
 
 </script>  
 </body>

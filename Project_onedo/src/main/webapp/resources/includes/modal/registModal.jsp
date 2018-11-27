@@ -74,7 +74,6 @@
               </button>
             </div>
 
-
             <!-- 인증 결과 표시해주는 DIV 태그 -->
             <div class="form-group"></div>
 
@@ -82,7 +81,6 @@
               <input type="submit"
                 class="btn btn-primary btn-block btn-lg" value="회 원 가 입">
             </div>
-
 
           </form>
 

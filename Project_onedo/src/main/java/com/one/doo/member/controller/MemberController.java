@@ -114,13 +114,14 @@ public class MemberController{
 		}
 	}
 	
+	//아이디 중복체크
 	@PostMapping("idDupCheck")
 	public @ResponseBody String idcheck(@RequestBody Member member){
 		int count = 0;
 		log.info(member.toString());
 		
-//		count = memberService.idcheck(member.getUserid());
-		count = 1;
+		count = memberService.idcheck(member.getUserid());
+//		count = 1;
 		log.info("중복체크결과, 중복되는아이디 수: "+count);
 		String result = "{\"cnt\":"+count+"}";
 //		map.put("cnt", count);
