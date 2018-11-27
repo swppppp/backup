@@ -104,7 +104,6 @@
 <script src="${pageContext.request.contextPath}/resources/js/modal.js"></script>
 
 <!-- 회원가입관련 javascript -->
-<!-- 모달띄우고 form제출 -->
 <script type="text/javascript">
 
 // 폼 제출 전, email 합쳐주기
@@ -112,6 +111,7 @@ function beforeSubmit() {
   var memberEmail = $('#email').val() +'@'+ $('#emailHost').val();
   $('#memberEmail').val(memberEmail);
 };
+
 
 // 아이디 중복확인을 위한 비동기
 $(function() {
@@ -155,6 +155,52 @@ $(function() {
 	});
 });
 
+// email과 emailHost 연결
+$(function(){
+	$('#emailCertify').on('click', function() {
+		// email값 비동기로 전송
+		var useremail = $('#email').val()+'@'+$('#emailHost').val();
+		console.log("이메일값: "+$('#email').val());
+		
+		//이메일 입력 안했을경우 return
+		if($('#email').val().trim() === ''){
+			console.log("이메일입력안함");
+			alert('이메일을 입력해 주세요');
+			return;
+		}
+		
+		$('#useremail').val(useremail);
+		// 비동기로 보낼 email값
+		var emailInfo = {
+				"useremail":useremail
+		}
+		// 인증버튼클릭으로 생성된 임의의 코드저장할 변수
+		var code;
+		
+		$.ajax({
+			type : 'POST',
+			data : JSON.stringify(emailInfo),
+			url : "member/emailCertify",
+			dataType : "json",
+			contentType : "application/json; charset=utf-8",
+			success : function(data) {
+				alert("비동기 성공.."+data.code+"인증번호를 보냈습니다. 확인 후 입력해주세요");
+				// 코드확인도 비동기 필요...
+				code = data.code;
+				console.log(code);
+				// 코드입력란 활성화, focus
+				$('#certifyCodeInput').removeAttr('disabled');
+				$('#certifyCodeInput').focus();
+				$('#emailCertify').text('확인');
+			},
+			error : function(error) {
+				alert("비동기오류");
+			}
+			
+		});
+		
+	});
+});
 </script>  
 </body>
 </html>

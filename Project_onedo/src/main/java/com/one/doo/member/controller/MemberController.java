@@ -76,23 +76,6 @@ public class MemberController{
 		log.info("---------regist화면-----------");
 		return "redirect:/";  //home화면으로 redirect
 	}
-	// 회원가입요청
-//	@PostMapping("/regist") //회원가입요청
-//	public String regist(Member member, BindingResult bindingResult, Model model) {
-//		log.info("--------regist------------");
-//		// 유효성 체크
-//		this.validator.validate(member, bindingResult);
-//		if(bindingResult.hasErrors()) {
-//			log.info("서버단 유효성 걸림...");
-//			model.addAttribute("errors", bindingResult);
-//			return "regist";
-//		}else {
-//			log.info("서버단 유효성 통과...");
-//			memberService.regist(member);
-//			return "home";
-//		}
-//		
-//	}
 
 	@PostMapping("/regist") //회원가입요청
 	public String regist(@ModelAttribute("member") Member member, BindingResult bindingResult, Model model) {
@@ -121,43 +104,25 @@ public class MemberController{
 		log.info(member.toString());
 		
 		count = memberService.idcheck(member.getUserid());
-//		count = 1;
 		log.info("중복체크결과, 중복되는아이디 수: "+count);
 		String result = "{\"cnt\":"+count+"}";
-//		map.put("cnt", count);
 	
 		return result;
-		// security 적용 전, session 에러발생..(Cannot create a session after the response has been committed)
-		// 403에러 쿼리까지 실행됨, return시 원래 jsp로 가면서 interceptor에 걸리는듯..(security관련 interceptor추정...ㅠㅠㅠ)
 	}	
 	
-//	@RequestMapping(value="idcheck", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
-//	public @ResponseBody String idcheck(HttpServletResponse response, @RequestParam("userid") String userid, Model model) {
-//		log.info("idcheck컨트롤러 진입-------");
-//		log.info("id값: "+userid);
-//		int count = 0;
-//		count = memberService.idcheck(userid);
-//		log.info("중복체크결과 count: "+count);
-////		model.addAttribute("cnt", count);
-//		String result = "{'cnt':"+count+"}";
-//		return result;
-//	}
-
-//	@RequestMapping("idcheck")
-//	@ResponseBody
-//	public void idcheck(HttpServletResponse response, @RequestBody String userid) {
-//		log.info("idcheck컨트롤러 진입-------");
-//		log.info("id값: "+userid);
-//		int count = 0;
-//		count = memberService.idcheck(userid);
-//		log.info("중복체크결과 count: "+count);
-//		response.setCharacterEncoding("utf-8");
-//		response.addIntHeader("cnt", count);
-////		model.addAttribute("cnt", count);
-////		String result = "{'cnt':"+count+"}";
-////		return null;
-//	}
-//
+	// 이메일인증요청
+	@PostMapping("emailCertify")
+	public @ResponseBody String emailCertify(@RequestBody String email) {
+		log.info("이메일인증 컨트롤러");
+		log.info("입력받은 이메일"+email);
+		//비즈니스로직~~
+		
+		String code = "1234";  //비즈니스로직을 통해 생성된 난수 사용
+		String result = "{\"code\":"+code+"}";
+		
+		return result;
+	}
+	
 }
 
 

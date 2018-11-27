@@ -15,13 +15,13 @@
           <form action="member/regist" method="post" onsubmit="beforeSubmit()">
             <div class="form-group">
               <input type="text" name="userid" id="userid"
-                class="form-control width-60"
+                class="form-control width-60 display-i"
                 placeholder="ID 입력 (12자 이내의 영문, 숫자 조합)"
                 required="required"
-                style="padding-left: 10px; display: inline;" /> <input
-                type="button" value="중복확인" id="dupCheck"
-                class="display-i btn btn-primary btn-lg width-37 height-40"
-                style="display: inline;" /> 중복확인
+                style="padding-left: 10px; width:60%; display:inline;" /> 
+                
+                <input type="button" value="중복확인" id="dupCheck" style="width: 38%;"
+                class="display-i btn btn-primary btn-lg width-37 height-40"/>
             </div>
 
             <div class="form-group">
@@ -47,19 +47,19 @@
               <input type="text" id="email"
                 class="display-i form-control width-50"
                 placeholder="이메일을 입력하세요" required="required"
-                style="padding-left: 10px; width:50px;"> <span
+                style="padding-left: 10px; width:50%; display:inline;"> <span
                 class="fsize-16 width-8">&nbsp;@&nbsp;</span> <select
                 id="emailHost"
                 class="display-i form-control vertical-align-t p-l-0 width-40"
                 name="emailHost" id="emailHost"
-                style="padding-left: 10px;">
+                style="padding-left: 10px; width:40%; display:inline;">
                 <option selected>이메일선택</option>
                 <option>daum.net</option>
                 <option>gmail.com</option>
                 <option>naver.com</option>
                 <option>nate.com</option>
                 <!-- <option>직접입력</option> 이거선택시 input text만들어져야함..-->
-              </select> <input type="hidden" id="memberEmail" name="memberEmail">
+              </select> <input type="hidden" id="useremail" name="useremail">
             </div>
             <div class="form-group">
               <!-- <input type="text" class="display-i form-control width-40" placeholder="직접입력" required="required" style="padding-left:10px;"> -->
@@ -67,9 +67,10 @@
               <input type="text" id="certifyCodeInput"
                 class="display-i form-control width-60"
                 placeholder="인증번호를 입력하세요" disabled="disabled"
-                required="required" style="padding-left: 10px; width: 60px;">&nbsp;
+                required="required" style="padding-left: 10px; width: 60%; display:inline;">&nbsp;
               <button type="button" id="emailCertify"
-                class="display-i btn btn-primary btn-block btn-lg width-37 height-40" />
+                class="display-i btn btn-primary btn-block btn-lg width-37 height-40" 
+                style="width:38%; display:inline;"/>
               이메일인증
               </button>
             </div>
