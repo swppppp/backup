@@ -12,7 +12,7 @@
         </div>
         <div class="modal-body">
 
-          <form action="member/regist" method="post" onsubmit="beforeSubmit()">
+          <form action="/member/regist" method="post" onsubmit="beforeSubmit()">
             <div class="form-group">
               <input type="text" name="userid" id="userid"
                 class="form-control width-60 display-i"

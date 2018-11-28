@@ -24,14 +24,14 @@ public class MemberServiceImpl implements MemberService {
 	private MemberMapper memberMapper;
 	@Inject
 	private AuthMapper authMapper;
-//	@Inject
-//	private PasswordEncoder pwencoder;
+	@Inject
+	private PasswordEncoder pwencoder;
 	
 	@Transactional
 	@Override
 	public void regist(Member member) {
-//		String userpw = pwencoder.encode(member.getUserpw());
-//		member.setUserpw(userpw);
+		String userpw = pwencoder.encode(member.getUserpw());
+		member.setUserpw(userpw);
 		
 		Auth auth = new Auth();
 		auth.setUserid(member.getUserid());

@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,6 +10,7 @@
   <!-- header include 시작 -->
   <jsp:include page="${pageContext.request.contextPath}/resources/includes/headTagConfig.jsp"/>
   <!-- header include 종료 -->
+  
 </head>
 <body class="animsition">
 
@@ -121,16 +122,11 @@ $(function() {
 	// idDup버튼 클릭 시, 비동기로 아이디 중복확인
 	$('#dupCheck').on('click', function() {
 		var userid = $('#userid').val();
-		var userInfo = {
-				"userid":userid
-		}
 		
 		$.ajax({
-			type : 'POST',
-			data : JSON.stringify(userInfo),
-			url : "member/idDupCheck",
+			type : 'GET',
+			url : "member/idDupCheck/"+userid,
 			dataType : "json",
-			contentType : "application/json; charset=utf-8",
 			success : function(data) {
 				//비동기 성공 시
 				if(data.cnt > 0){
@@ -158,6 +154,7 @@ $(function() {
 // email과 emailHost 연결
 $(function(){
 	$('#emailCertify').on('click', function() {
+		
 		// email값 비동기로 전송
 		var useremail = $('#email').val()+'@'+$('#emailHost').val();
 		console.log("이메일값: "+$('#email').val());
@@ -170,19 +167,13 @@ $(function(){
 		}
 		
 		$('#useremail').val(useremail);
-		// 비동기로 보낼 email값
-		var emailInfo = {
-				"useremail":useremail
-		}
 		// 인증버튼클릭으로 생성된 임의의 코드저장할 변수
 		var code;
 		
 		$.ajax({
-			type : 'POST',
-			data : JSON.stringify(emailInfo),
-			url : "member/emailCertify",
+			type : 'GET',
+			url : "member/emailCertify/"+useremail,
 			dataType : "json",
-			contentType : "application/json; charset=utf-8",
 			success : function(data) {
 				alert("비동기 성공.."+data.code+"인증번호를 보냈습니다. 확인 후 입력해주세요");
 				// 코드확인도 비동기 필요...
@@ -202,5 +193,12 @@ $(function(){
 	});
 });
 </script>  
+  <!-- 로그인 비동기 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="/resources/js/jquery.Form.js"></script> 
+<script src="/resources/js/login.js"></script> 
+
 </body>
 </html>

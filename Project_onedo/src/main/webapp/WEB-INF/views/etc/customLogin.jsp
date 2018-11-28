@@ -173,19 +173,19 @@ body {
 		<div class="modal-content">
 			<div class="modal-header">				
 				<h4 class="modal-title">로그인</h4>
-                 <p>${error}</p>
+                 <p id="validation_sign_in_error"></p>
                  <p>${logout}</p>
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			</div>
-			<div class="modal-body">
-				<form action="/doo/login" method="post">
+			<div class="modal-body"><!-- form action="/doo/login" -->
+				<form action="/login" method="post">
 					<div class="form-group">
 						<i class="fa fa-user"></i>
 						<input type="text" name="username" class="form-control" placeholder="ID 입력(12자 이내의 영문, 숫자 조합)" required="required">
 					</div>
 					<div class="form-group">
 						<i class="fa fa-lock"></i>
-						<input type="password" class="form-control" placeholder="PW 입력(12자 이내의 영문, 숫자 조합)" required="required" name="password">					
+						<input type="password" name="password" class="form-control" placeholder="PW 입력(12자 이내의 영문, 숫자 조합)" required="required">					
 					</div>
                     <div class="form-group">
                         <div class="switch" data-name="human" data-checked="true" data-value="true">
@@ -197,9 +197,9 @@ body {
                         <!-- <input name="remember-me" type="hidden"> -->
                     </div>
 					<div class="form-group">
+						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
 						<input type="submit" class="btn btn-primary btn-block btn-lg" value="로그인">
 					</div>
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 				</form>				
 			</div>
 			<div class="modal-footer">
@@ -209,6 +209,7 @@ body {
 	</div>
 </div>     
 </body>
+
 <script type="text/javascript">
 var modal = document.getElementById('myModal');
 
@@ -217,10 +218,10 @@ var btn = document.getElementById('loginButton');
 var span = document.getElementsByClassName('close')[0];                                          
 
 // When the user clicks on the button, open the modal 
-btn.onclick = function() {
+/* btn.onclick = function() {
     modal.style.display = 'block';
 }
-
+ */
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
     modal.style.display = 'none';
@@ -235,7 +236,9 @@ window.onclick = function(event) {
 
 </script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> 
-<script src="resources/jquery/jquery.checkable.js"></script> 
+<script src="resources/jquery/jquery.checkable.js"></script>
+<!-- <script src="/resources/js/login.js"></script>  -->
+<!-- 
 <script>
   
   $(".btn-lg").on("click", function(e){
@@ -244,6 +247,7 @@ window.onclick = function(event) {
   });
   
 </script>
+ -->
 <script>
 $(".switch").checkable()
 $("[data-name=human]").checkable("check", false)
@@ -263,4 +267,11 @@ $("[data-name=alien]").checkable("check", true)
   })();
 
 </script>
+<c:if test="${param.logout != null}">
+      <script>
+      $(document).ready(function(){
+        alert("로그아웃하였습니다.");
+      });
+      </script>
+</c:if>
 </html>

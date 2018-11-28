@@ -22,8 +22,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response,
 			AccessDeniedException accessDeniedException) throws IOException, ServletException {
-		log.error("Access Denied Handler");
-		log.error("Redirect Login Page...");
+		log.error("액세스가 거부되어 에러페이지로 포워드합니다...");
 		response.sendRedirect(request.getContextPath() + "/error/error_403");
 	}
 

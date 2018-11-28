@@ -2,12 +2,14 @@ package com.one.doo.member.controller;
 
 import javax.inject.Inject;
 
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,22 +43,20 @@ public class MemberController{
 		model.addAttribute("auth", auth);
 	}
 	
-	@RequestMapping("/customLogin")
-	public void loginInput(String error, String logout, Model model){
-		log.info("error: " + error);
-		log.info("logout: " + logout);
-		log.info(model);
-		
-		if(error != null) {
-			model.addAttribute("error", "아이디와 비밀번호를 확인하세요.");			
-		}
-		
-		if(logout != null) {
-			model.addAttribute("logout", "로그아웃!!");			
-		}
-	}
-	
-	
+//	@RequestMapping("/customLogin")
+//	public void loginInput(String error, String logout, Model model){
+//		log.info("error: " + error);
+//		log.info("logout: " + logout);
+//		log.info(model);
+//		
+//		if(error != null) {
+//			model.addAttribute("error", "아이디와 비밀번호를 확인하세요.");			
+//		}
+//		
+//		if(logout != null) {
+//			model.addAttribute("logout", "로그아웃!!");			
+//		}
+//	}
 	
 	@GetMapping("/customLogout")
 	public void logoutGET(){
@@ -68,6 +68,15 @@ public class MemberController{
 		log.info("사용자 로그아웃 처리");
 	}
 	
+	@GetMapping("/loginForm")
+	public void loginForm() {
+		log.info("로그인화면!!!!");
+	}
+	
+	@PostMapping("/login")
+	public void loginPost() {
+		log.info("로그인요청!!!!");
+	}
 	
 	
 	// 회원가입
@@ -98,23 +107,21 @@ public class MemberController{
 	}
 	
 	//아이디 중복체크
-	@PostMapping("idDupCheck")
-	public @ResponseBody String idcheck(@RequestBody Member member){
+	@GetMapping("idDupCheck/{userid}")
+	public @ResponseBody String idcheck(@PathVariable String userid){
 		int count = 0;
-		log.info(member.toString());
-		
-		count = memberService.idcheck(member.getUserid());
+		log.info(userid);
+		count = memberService.idcheck(userid);
 		log.info("중복체크결과, 중복되는아이디 수: "+count);
 		String result = "{\"cnt\":"+count+"}";
-	
 		return result;
 	}	
 	
 	// 이메일인증요청
-	@PostMapping("emailCertify")
-	public @ResponseBody String emailCertify(@RequestBody String email) {
+	@GetMapping("emailCertify/{useremail}")
+	public @ResponseBody String emailCertify(@PathVariable String useremail) {
 		log.info("이메일인증 컨트롤러");
-		log.info("입력받은 이메일"+email);
+		log.info("입력받은 이메일"+useremail);
 		//비즈니스로직~~
 		
 		String code = "1234";  //비즈니스로직을 통해 생성된 난수 사용
